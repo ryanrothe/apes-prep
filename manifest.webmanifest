@@ -1,7 +1,7 @@
 {
-  "name": "Terra: AP Environmental Science",
+  "name": "Terra: Study Hub",
   "short_name": "Terra",
-  "description": "Study companion for AP Environmental Science",
+  "description": "Study companion: AP Environmental Science and Statistics",
   "start_url": ".",
   "scope": ".",
   "display": "standalone",

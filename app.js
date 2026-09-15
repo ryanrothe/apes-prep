@@ -1,19 +1,44 @@
-/* Terra — AP Environmental Science prep engine (adapted from Summit) */
+/* Terra study hub engine (adapted from Summit; course layer added 2026-09-15).
+   One engine, many courses. Each course owns its domains, diagrams, worked examples, and its own localStorage key. */
 (function () {
 "use strict";
 
 const DATA = window.EXAM_DATA || {};
 const DOMAINS_ALL = DATA.domains || {};
-const DOMAIN_ORDER = ["eco", "terr", "aqua", "cycles", "prod", "energy"];
-const DOMAINS = DOMAIN_ORDER.filter(d => DOMAINS_ALL[d]);
-const DIAGRAMS = window.DIAGRAMS || [];
-const UNIT_NAMES = { 1: "Unit 1 · The Living World: Ecosystems" };
+const WORKED_ALL = DATA.worked || {};
+const ALL_DIAGRAMS = window.DIAGRAMS || [];
+const COURSES = window.COURSES || [];
+const COURSE_KEY = "terra.course";
 const DAY = 86400000;
 const BOX_DAYS = [0, 1, 3, 7, 14];
 
-/* ---------- state ---------- */
-const KEY = "apesPrep.v1";
-let S = load();
+/* ---------- course + state ---------- */
+let COURSE = null, DOMAINS = [], DIAGRAMS = [], UNIT_NAMES = {}, SIM_SPEC = null, WORKED = [], KEY = "";
+let S = null;
+let QZ = null, FL = null, LB = null;
+
+function courseById(id) { return COURSES.find(c => c.id === id) || null; }
+function loadCourse(id) {
+  const c = courseById(id);
+  if (!c) return false;
+  COURSE = c;
+  DOMAINS = c.domains.filter(d => DOMAINS_ALL[d]);
+  DIAGRAMS = ALL_DIAGRAMS.filter(v => c.domains.includes(v.domain));
+  UNIT_NAMES = c.units || {};
+  SIM_SPEC = c.sim;
+  WORKED = WORKED_ALL[c.id] || [];
+  KEY = c.storageKey;
+  S = load();
+  QZ = FL = LB = null;
+  try { localStorage.setItem(COURSE_KEY, id); } catch (e) {}
+  document.documentElement.setAttribute("data-course", id);
+  return true;
+}
+function leaveCourse() {
+  COURSE = null; DOMAINS = []; DIAGRAMS = []; UNIT_NAMES = {}; SIM_SPEC = null; WORKED = []; KEY = ""; S = null;
+  QZ = FL = LB = null;
+  document.documentElement.removeAttribute("data-course");
+}
 function load() {
   try {
     const raw = localStorage.getItem(KEY);
@@ -21,18 +46,36 @@ function load() {
   } catch (e) { /* corrupted state falls through to fresh */ }
   return fresh();
 }
+function freshSettings() {
+  const s = {};
+  ((COURSE && COURSE.dates) || []).forEach(d => { s[d.key] = ""; });
+  return s;
+}
 function fresh() {
-  return { settings: { testDate: "", apDate: "" }, items: {}, conf: {}, hist: [],
-           labs: {}, streak: { day: "", n: 0 }, sim: null };
+  return { settings: freshSettings(), items: {}, conf: {}, hist: [], labs: {}, streak: { day: "", n: 0 }, sim: null };
 }
 function migrate(s) {
   const f = fresh();
   const out = Object.assign(f, s);
-  out.settings = Object.assign(fresh().settings, s.settings || {});
+  out.settings = Object.assign(freshSettings(), s.settings || {});
   out.labs = s.labs || {};
   return out;
 }
-function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+function save() { if (!KEY || !S) return; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+
+/* Run fn with another course's data + stored state loaded, without disturbing the current session.
+   Used by the hub to show per-course readiness. Nothing is saved while inside. */
+function withCourse(c, fn) {
+  const keep = { COURSE, DOMAINS, DIAGRAMS, UNIT_NAMES, SIM_SPEC, WORKED, KEY, S };
+  COURSE = c; DOMAINS = c.domains.filter(d => DOMAINS_ALL[d]); DIAGRAMS = ALL_DIAGRAMS.filter(v => c.domains.includes(v.domain));
+  UNIT_NAMES = c.units || {}; SIM_SPEC = c.sim; WORKED = WORKED_ALL[c.id] || []; KEY = c.storageKey; S = load();
+  let out;
+  try { out = fn(); } finally {
+    COURSE = keep.COURSE; DOMAINS = keep.DOMAINS; DIAGRAMS = keep.DIAGRAMS; UNIT_NAMES = keep.UNIT_NAMES;
+    SIM_SPEC = keep.SIM_SPEC; WORKED = keep.WORKED; KEY = keep.KEY; S = keep.S;
+  }
+  return out;
+}
 
 /* ---------- helpers ---------- */
 const $ = sel => document.querySelector(sel);
@@ -42,6 +85,9 @@ function daysSince(ts) { return ts ? (Date.now() - ts) / DAY : Infinity; }
 function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 function pct(x) { return Math.round(x * 100); }
 function plural(n, w) { return n + " " + w + (n === 1 ? "" : "s"); }
+function simCount() { return SIM_SPEC ? Object.values(SIM_SPEC.mix).reduce((a, b) => a + b, 0) : 0; }
+function simLabel() { return "⏱ Timed practice test · " + simCount() + " Q · " + SIM_SPEC.minutes + " min"; }
+function unitsPresent() { const u = []; DOMAINS.forEach(d => { const n = DOMAINS_ALL[d].unit || 1; if (!u.includes(n)) u.push(n); }); return u; }
 
 function itemStat(id) { return S.items[id] || { n: 0, c: 0, streak: 0, last: 0, box: 0, due: 0 }; }
 function setItemStat(id, st) { S.items[id] = st; }
@@ -154,13 +200,14 @@ function missedSet(n) {
 }
 
 /* ---------- navigation ---------- */
-let view = { name: "home" };
+let view = { name: "hub" };
 function go(name, params) { view = Object.assign({ name }, params || {}); render(); window.scrollTo(0, 0); }
 
 document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => go(t.dataset.view)));
 
 function setTabs() {
-  const top = ["quiz", "flash"].includes(view.name) ? "study" :
+  document.body.classList.toggle("no-tabs", !COURSE || view.name === "hub");
+  const top = ["quiz", "flash", "worked"].includes(view.name) ? "study" :
               ["diagram", "label"].includes(view.name) ? "diagrams" : view.name;
   document.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t.dataset.view === top));
 }
@@ -190,11 +237,13 @@ function domName(d) { return DOMAINS_ALL[d] ? DOMAINS_ALL[d].name : d; }
 function render() {
   setTabs();
   const m = $("#main");
+  if (!COURSE || view.name === "hub") return renderHub(m);
   if (!DOMAINS.length) { m.innerHTML = '<div class="card">Question banks are still loading into this build. Pull the latest version.</div>'; return; }
   if (view.name === "home") return renderHome(m);
   if (view.name === "study") return renderStudy(m);
   if (view.name === "quiz") return renderQuiz(m);
   if (view.name === "flash") return renderFlash(m);
+  if (view.name === "worked") return renderWorked(m);
   if (view.name === "diagrams") return renderDiagramList(m);
   if (view.name === "diagram") return renderDiagramStudy(m);
   if (view.name === "label") return renderLabel(m);
@@ -203,13 +252,58 @@ function render() {
   renderHome(m);
 }
 
+/* ----- hub: pick a course ----- */
+function courseSnapshot(c) {
+  return withCourse(c, () => {
+    const doms = DOMAINS;
+    const needs = doms.map(domStats);
+    const overall = needs.length ? Math.round(needs.reduce((a, s) => a + s.readiness, 0) / needs.length) : 0;
+    const qn = doms.reduce((a, d) => a + domainQuiz(d).length, 0);
+    const cn = doms.reduce((a, d) => a + domainCards(d).length, 0);
+    const due = dueCards(null).length;
+    const answered = Object.values(S.items).reduce((a, s) => a + (s.n || 0), 0);
+    const lastTs = Math.max(0, ...needs.map(s => s.lastTs || 0));
+    const overallShown = (answered || lastTs) ? overall : 0;
+    const dates = (c.dates || []).map(d => ({ label: d.label, ds: S.settings[d.key] })).filter(d => d.ds)
+      .map(d => ({ label: d.label, diff: Math.ceil((new Date(d.ds + "T12:00:00") - Date.now()) / DAY) })).filter(d => d.diff >= 0);
+    return { overall: overallShown, qn, cn, dn: DIAGRAMS.length, wn: WORKED.length, due, answered, lastTs, dates, resumeSim: !!(S.sim && !S.sim.submitted) };
+  });
+}
+
+function renderHub(m) {
+  let last = "";
+  try { last = localStorage.getItem(COURSE_KEY) || ""; } catch (e) {}
+  m.innerHTML = '<h1>Terra</h1><p class="sub">Your study hub. Pick a course.</p>' +
+    COURSES.map(c => {
+      const s = courseSnapshot(c);
+      const started = s.answered > 0 || s.lastTs > 0;
+      const meta = plural(s.qn, "question") + " · " + plural(s.cn, "flashcard") + (s.dn ? " · " + plural(s.dn, "diagram") : "") + (s.wn ? " · " + plural(s.wn, "worked example") : "");
+      const status = !started ? "Not started yet" :
+        (s.due ? plural(s.due, "card") + " due" : "Cards caught up") +
+        (s.lastTs ? " · last studied " + (daysSince(s.lastTs) < 1 ? "today" : Math.floor(daysSince(s.lastTs)) + "d ago") : "");
+      const count = s.dates.length ? '<div class="hub-count"><b>' + s.dates[0].diff + '</b> days to ' + esc(s.dates[0].label) + "</div>" : "";
+      return '<div class="card hub-card" style="--dc:' + c.color + '">' +
+        '<div class="row"><span class="ring-wrap"><span class="ring-svg">' + ring(s.overall / 100, c.color) + '</span><span class="ring-num">' + s.overall + "</span></span>" +
+        '<div class="grow"><b class="hub-name">' + esc(c.name) + "</b><div class=\"muted\">" + esc(meta) + "</div>" +
+        '<div class="muted hub-status">' + esc(status) + "</div></div></div>" +
+        count +
+        '<button class="btn block hub-open" data-course="' + c.id + '" style="background:' + c.color + '">' +
+        (s.resumeSim ? "Resume practice test" : (last === c.id && started) ? "Continue" : started ? "Open" : "Start") + " →</button></div>";
+    }).join("") +
+    '<p class="muted center" style="margin-top:10px">Each course keeps its own progress, streak, and backup code.</p>';
+  m.querySelectorAll(".hub-open").forEach(b => b.addEventListener("click", () => {
+    if (loadCourse(b.dataset.course)) go(S.sim && !S.sim.submitted ? "exam" : "home");
+  }));
+}
+
 /* ----- home ----- */
 function examCountdown() {
   const out = [];
-  [["unit test", S.settings.testDate], ["AP exam", S.settings.apDate]].forEach(([label, ds]) => {
+  (COURSE.dates || []).forEach(d => {
+    const ds = S.settings[d.key];
     if (!ds) return;
     const diff = Math.ceil((new Date(ds + "T12:00:00") - Date.now()) / DAY);
-    if (diff >= 0) out.push({ label, diff });
+    if (diff >= 0) out.push({ label: d.label, diff });
   });
   return out;
 }
@@ -221,6 +315,12 @@ function nextDiagram() {
   return done[0] || null;
 }
 
+function courseHeader(title, sub) {
+  return '<div class="row course-bar"><button class="btn small secondary" id="go-hub">‹ Courses</button><span class="chip" style="--dc:' + COURSE.color + '"><span class="dot"></span>' + esc(COURSE.short) + "</span></div>" +
+    "<h1>" + esc(title) + '</h1><p class="sub">' + esc(sub) + "</p>";
+}
+function wireHub(m) { const b = m.querySelector("#go-hub"); if (b) b.addEventListener("click", () => { leaveCourse(); go("hub"); }); }
+
 function renderHome(m) {
   const needs = rankedNeeds();
   const due = dueCards(null).length;
@@ -231,9 +331,9 @@ function renderHome(m) {
   const nd = nextDiagram();
 
   m.innerHTML =
-    '<h1>Terra</h1><p class="sub">AP Environmental Science, one step at a time.</p>' +
+    courseHeader(COURSE.name, COURSE.tagline) +
     (counts.length ? '<div class="exam-count">' + counts.map(c =>
-      '<div class="exam-pill"><div class="n">' + c.diff + '</div><div class="l">days to ' + c.label + "</div></div>").join("") + "</div>"
+      '<div class="exam-pill"><div class="n">' + c.diff + '</div><div class="l">days to ' + esc(c.label) + "</div></div>").join("") + "</div>"
       : '<div class="card row"><div class="grow">Set your test date to see a countdown.</div><button class="btn small" id="set-dates">Set dates</button></div>') +
     '<div class="card row"><div class="grow"><b>' + (streakN ? "🔥 " + plural(streakN, "day") + " streak" : "Start today’s streak") + "</b>" +
     '<div class="muted">' + (due ? plural(due, "card") + " due for review" : "All caught up on flashcards") + "</div></div>" +
@@ -258,8 +358,10 @@ function renderHome(m) {
     '<button class="btn block secondary" id="due-flash">Review due flashcards' + (due ? " (" + due + ")" : "") + "</button>" +
     '<div style="height:8px"></div>' +
     (nd ? '<button class="btn block secondary" id="go-label">◫ Label a diagram: ' + esc(nd.title) + '</button><div style="height:8px"></div>' : "") +
-    '<button class="btn block secondary" id="go-exam">' + (S.sim && !S.sim.submitted ? "⏱ Resume practice test" : "⏱ Timed practice test · 25 Q · 30 min") + '</button></div>';
+    (WORKED.length ? '<button class="btn block secondary" id="go-worked">✎ Worked examples, step by step (' + WORKED.length + ')</button><div style="height:8px"></div>' : "") +
+    '<button class="btn block secondary" id="go-exam">' + (S.sim && !S.sim.submitted ? "⏱ Resume practice test" : simLabel()) + '</button></div>';
 
+  wireHub(m);
   m.querySelectorAll("[data-quiz]").forEach(b => b.addEventListener("click", () => startQuiz(b.dataset.quiz)));
   m.querySelectorAll("[data-flash]").forEach(b => b.addEventListener("click", () => startFlash(b.dataset.flash)));
   m.querySelectorAll("[data-dom]").forEach(b => b.addEventListener("click", () => go("study", { dom: b.dataset.dom })));
@@ -268,28 +370,33 @@ function renderHome(m) {
   $("#smart-quiz").addEventListener("click", () => startQuiz(null));
   $("#due-flash").addEventListener("click", () => startFlash(null));
   const gl = $("#go-label"); if (gl) gl.addEventListener("click", () => startLabel(nd.id));
+  const gw = $("#go-worked"); if (gw) gw.addEventListener("click", () => go("worked"));
   $("#go-exam").addEventListener("click", startSim);
 }
 
 /* ----- study hub ----- */
 function renderStudy(m) {
   const missed = missedSet(10).length;
-  m.innerHTML = '<h1>Study</h1><p class="sub">Pick a mode, or drill a single topic.</p>' +
+  m.innerHTML = courseHeader("Study", "Pick a mode, or drill a single topic.") +
     '<div class="card"><button class="btn block" id="smart-quiz">▶ Smart quiz</button><div style="height:8px"></div>' +
     '<div class="row"><button class="btn secondary grow" id="due-flash">Flashcards due (' + dueCards(null).length + ')</button>' +
     '<button class="btn secondary grow" id="go-diagrams">Diagrams</button></div>' +
-    '<div style="height:8px"></div><button class="btn block secondary" id="go-exam">' + (S.sim && !S.sim.submitted ? "⏱ Resume practice test" : "⏱ Timed practice test · 25 Q · 30 min") + '</button>' +
+    '<div style="height:8px"></div><button class="btn block secondary" id="go-exam">' + (S.sim && !S.sim.submitted ? "⏱ Resume practice test" : simLabel()) + '</button>' +
     (missed ? '<div style="height:8px"></div><button class="btn block secondary" id="review-missed">Review recent misses (' + missed + ")</button>" : "") +
-    "</div><h2>" + esc(UNIT_NAMES[1]) + "</h2>" +
-    DOMAINS.map(d => {
-      const s = domStats(d);
-      return '<div class="card" style="--dc:' + domColor(d) + '">' +
-        '<div class="row"><span class="dot"></span><div class="grow"><b>' + esc(domName(d)) + "</b>" +
-        '<div class="muted">' + s.seen + "/" + s.total + " questions seen · " + (s.attempts ? "accuracy " + pct(s.acc) + "%" : "no attempts yet") + "</div></div>" +
-        '<span class="chip">' + s.readiness + "%</span></div>" +
-        '<div class="row" style="margin-top:10px"><button class="btn small grow" data-quiz="' + d + '">Quiz</button>' +
-        '<button class="btn small secondary grow" data-flash="' + d + '">Flashcards</button></div></div>';
-    }).join("");
+    "</div>" +
+    unitsPresent().map(u => "<h2>" + esc(UNIT_NAMES[u] || ("Unit " + u)) + "</h2>" +
+      DOMAINS.filter(d => (DOMAINS_ALL[d].unit || 1) === u).map(d => {
+        const s = domStats(d);
+        return '<div class="card" style="--dc:' + domColor(d) + '">' +
+          '<div class="row"><span class="dot"></span><div class="grow"><b>' + esc(domName(d)) + "</b>" +
+          '<div class="muted">' + s.seen + "/" + s.total + " questions seen · " + (s.attempts ? "accuracy " + pct(s.acc) + "%" : "no attempts yet") + "</div></div>" +
+          '<span class="chip">' + s.readiness + "%</span></div>" +
+          '<div class="row" style="margin-top:10px"><button class="btn small grow" data-quiz="' + d + '">Quiz</button>' +
+          '<button class="btn small secondary grow" data-flash="' + d + '">Flashcards</button></div></div>';
+      }).join("")).join("") +
+    (WORKED.length ? "<h2>Worked examples</h2>" + WORKED.map((w, i) =>
+      '<button class="card worked-card" data-worked="' + i + '" style="--dc:' + domColor(w.domain) + '"><span class="row"><span class="dot"></span><span class="grow"><b>' + esc(w.title) + '</b><span class="muted" style="display:block">' + esc(domShort(w.domain)) + " · " + plural(w.steps.length, "step") + "</span></span><span class=\"muted\">›</span></span></button>").join("") : "");
+  wireHub(m);
   $("#smart-quiz").addEventListener("click", () => startQuiz(null));
   $("#due-flash").addEventListener("click", () => startFlash(null));
   $("#go-diagrams").addEventListener("click", () => go("diagrams"));
@@ -297,11 +404,45 @@ function renderStudy(m) {
   const rm = $("#review-missed"); if (rm) rm.addEventListener("click", () => startQuiz("__missed__"));
   m.querySelectorAll("[data-quiz]").forEach(b => b.addEventListener("click", () => startQuiz(b.dataset.quiz)));
   m.querySelectorAll("[data-flash]").forEach(b => b.addEventListener("click", () => startFlash(b.dataset.flash)));
+  m.querySelectorAll("[data-worked]").forEach(b => b.addEventListener("click", () => go("worked", { wi: Number(b.dataset.worked) })));
   if (view.dom) { const el = m.querySelector('[data-quiz="' + view.dom + '"]'); if (el) el.closest(".card").scrollIntoView(); }
 }
 
+/* ----- worked examples ----- */
+function renderWorked(m) {
+  if (view.wi == null) {
+    m.innerHTML = '<div class="row"><button class="btn small secondary" id="wk-back">← Study</button></div>' +
+      "<h1>Worked examples</h1><p class=\"sub\">The study-guide problems, solved one step at a time. Cover the steps, try it yourself, then reveal.</p>" +
+      WORKED.map((w, i) =>
+        '<button class="card worked-card" data-worked="' + i + '" style="--dc:' + domColor(w.domain) + '"><span class="row"><span class="dot"></span><span class="grow"><b>' + esc(w.title) + '</b><span class="muted" style="display:block">' + esc(domShort(w.domain)) + " · " + plural(w.steps.length, "step") + "</span></span><span class=\"muted\">›</span></span></button>").join("");
+    $("#wk-back").addEventListener("click", () => go("study"));
+    m.querySelectorAll("[data-worked]").forEach(b => b.addEventListener("click", () => go("worked", { wi: Number(b.dataset.worked) })));
+    return;
+  }
+  const w = WORKED[view.wi];
+  if (!w) return go("worked");
+  const shown = view.shown == null ? 0 : view.shown;
+  m.innerHTML = '<div class="row"><button class="btn small secondary" id="wk-back">← Examples</button>' +
+    '<div class="grow center"><span class="chip" style="--dc:' + domColor(w.domain) + '"><span class="dot"></span>' + esc(domShort(w.domain)) + "</span></div><span class=\"muted\">" + (view.wi + 1) + "/" + WORKED.length + "</span></div>" +
+    "<h1>" + esc(w.title) + "</h1>" +
+    '<div class="card narrative">' + esc(w.prompt) + "</div>" +
+    '<ol class="steps">' + w.steps.slice(0, shown).map(s => '<li><b>' + esc(s.h) + "</b><div>" + esc(s.t) + "</div></li>").join("") + "</ol>" +
+    (shown < w.steps.length ?
+      '<button class="btn block" id="wk-next">' + (shown === 0 ? "Show step 1" : "Show step " + (shown + 1) + " of " + w.steps.length) + "</button>" +
+      '<div style="height:8px"></div><button class="btn block secondary" id="wk-all">Show all steps</button>'
+      : '<div class="explain"><b>Answer.</b> ' + esc(w.answer) + "</div>" +
+        '<div class="row"><button class="btn secondary grow" id="wk-again">Hide steps</button>' +
+        '<button class="btn grow" data-quiz="' + w.domain + '">Quiz this topic</button></div>' +
+        (view.wi < WORKED.length - 1 ? '<div style="height:8px"></div><button class="btn block secondary" id="wk-nextex">Next example →</button>' : ""));
+  $("#wk-back").addEventListener("click", () => go("worked"));
+  const nx = $("#wk-next"); if (nx) nx.addEventListener("click", () => { view.shown = shown + 1; render(); });
+  const al = $("#wk-all"); if (al) al.addEventListener("click", () => { view.shown = w.steps.length; render(); });
+  const ag = $("#wk-again"); if (ag) ag.addEventListener("click", () => { view.shown = 0; render(); window.scrollTo(0, 0); });
+  const ne = $("#wk-nextex"); if (ne) ne.addEventListener("click", () => go("worked", { wi: view.wi + 1 }));
+  const qb = m.querySelector("[data-quiz]"); if (qb) qb.addEventListener("click", () => startQuiz(qb.dataset.quiz));
+}
+
 /* ----- quiz ----- */
-let QZ = null;
 function startQuiz(dom) {
   let set;
   if (dom === "__missed__") set = missedSet(10);
@@ -374,7 +515,6 @@ function confidenceSheet(d) {
 }
 
 /* ----- flashcards ----- */
-let FL = null;
 function startFlash(dom) {
   let pool = dueCards(dom);
   if (!pool.length) {
@@ -433,7 +573,7 @@ function renderFlash(m) {
 
 /* ----- diagrams: list, study, label ----- */
 function renderDiagramList(m) {
-  m.innerHTML = '<h1>Diagrams</h1><p class="sub">Every diagram works two ways: study it with the labels on, then prove it by labeling it yourself.</p>' +
+  m.innerHTML = courseHeader("Diagrams", "Every diagram works two ways: study it with the labels on, then prove it by labeling it yourself.") +
     (DIAGRAMS.length ? DIAGRAMS.map((v, i) => {
       const pr = S.labs[v.id];
       const hasLab = v.slots && v.slots.length;
@@ -443,6 +583,7 @@ function renderDiagramList(m) {
         '<div class="row" style="margin-top:10px"><button class="btn small grow" data-study="' + i + '">Study</button>' +
         (hasLab ? '<button class="btn small secondary grow" data-label="' + esc(v.id) + '">' + (pr ? "Label again" : "Label it") + "</button>" : "") + "</div></div>";
     }).join("") : '<div class="card">Diagrams are still loading into this build.</div>');
+  wireHub(m);
   m.querySelectorAll("[data-study]").forEach(b => b.addEventListener("click", () => go("diagram", { vi: Number(b.dataset.study) })));
   m.querySelectorAll("[data-label]").forEach(b => b.addEventListener("click", () => startLabel(b.dataset.label)));
 }
@@ -486,7 +627,6 @@ function renderDiagramStudy(m) {
   m.querySelector("[data-quiz]").addEventListener("click", () => startQuiz(v.domain));
 }
 
-let LB = null;
 function startLabel(id) {
   const d = DIAGRAMS.find(x => x.id === id);
   if (!d || !d.slots || !d.slots.length) return go("diagrams");
@@ -584,10 +724,10 @@ function renderProgress(m) {
   const labDone = DIAGRAMS.filter(v => S.labs[v.id]).length;
   const labTotal = DIAGRAMS.filter(v => v.slots && v.slots.length).length;
 
-  m.innerHTML = '<h1>Progress</h1><p class="sub">' + plural(answered, "question") + " answered so far.</p>" +
+  m.innerHTML = courseHeader("Progress", plural(answered, "question") + " answered so far in " + COURSE.name + ".") +
     '<div class="card row"><span class="ring-wrap" style="width:84px;height:84px">' + ring(overall / 100, "var(--accent)", 84, 9) +
     '<span class="ring-num" style="font-size:20px">' + overall + '</span></span><div class="grow"><b>Overall readiness</b>' +
-    '<div class="muted">Weighted blend across all 6 Unit 1 topics. Aim to get every ring past 75 before test day.</div></div></div>' +
+    '<div class="muted">Weighted blend across all ' + DOMAINS.length + " topics. Aim to get every ring past 75 before test day.</div></div></div>" +
 
     "<h2>Topics, weakest first</h2><div class=\"card\">" +
     needs.map(s => '<div class="bar-row" style="--dc:' + domColor(s.d) + '"><div class="bar-head"><span>' + esc(domName(s.d)) + "</span><span>" +
@@ -596,10 +736,10 @@ function renderProgress(m) {
       '<div class="bar-cov"><div style="width:' + pct(s.cov) + '%"></div></div></div>').join("") +
     '<p class="muted" style="margin:8px 0 0">Thick bar = accuracy in the topic color. Thin gray bar = how much of the bank you’ve seen.</p></div>' +
 
-    "<h2>Diagrams labeled</h2><div class=\"card\">" +
+    (labTotal ? "<h2>Diagrams labeled</h2><div class=\"card\">" +
     '<div class="topic-pill"><span>Labeled at least once</span><b>' + labDone + "/" + labTotal + "</b></div>" +
     DIAGRAMS.filter(v => S.labs[v.id]).map(v =>
-      '<div class="topic-pill" style="--dc:' + domColor(v.domain) + '"><span class="row"><span class="dot"></span>' + esc(v.title) + '</span><b>' + S.labs[v.id].score + "/" + S.labs[v.id].total + "</b></div>").join("") + "</div>" +
+      '<div class="topic-pill" style="--dc:' + domColor(v.domain) + '"><span class="row"><span class="dot"></span>' + esc(v.title) + '</span><b>' + S.labs[v.id].score + "/" + S.labs[v.id].total + "</b></div>").join("") + "</div>" : "") +
 
     (weak.length ? "<h2>Weak spots to attack</h2><div class=\"card\">" + weak.map(t =>
       '<div class="topic-pill" style="--dc:' + domColor(t.dom) + '"><span class="row"><span class="dot"></span>' + esc(t.topic) + '</span><b>' + pct(t.acc) + "%</b></div>").join("") + "</div>" : "") +
@@ -612,7 +752,7 @@ function renderProgress(m) {
       const exams = S.hist.filter(h => h.mode === "exam").slice(-5).reverse();
       if (!exams.length) return "";
       return "<h2>Practice tests</h2><div class=\"card\">" + exams.map(e =>
-        '<div class="topic-pill"><span>' + todayStr(new Date(e.t)) + " · Unit 1</span><b>" + e.c + "/" + e.n + " · " + pct(e.c / e.n) + "%</b></div>").join("") + "</div>";
+        '<div class="topic-pill"><span>' + todayStr(new Date(e.t)) + " · " + esc(COURSE.short) + "</span><b>" + e.c + "/" + e.n + " · " + pct(e.c / e.n) + "%</b></div>").join("") + "</div>";
     })() +
 
     "<h2>Confidence self-ratings</h2><div class=\"card\">" +
@@ -623,6 +763,7 @@ function renderProgress(m) {
     '<h2>Backup & settings</h2><div class="card">' +
     '<button class="btn block secondary" id="pg-settings">Test dates & backup</button></div>';
 
+  wireHub(m);
   m.querySelectorAll("[data-confdom]").forEach(row => row.querySelectorAll(".conf-btn").forEach(b =>
     b.addEventListener("click", () => { S.conf[row.dataset.confdom] = { v: Number(b.dataset.v), t: Date.now() }; save(); render(); })));
   $("#pg-settings").addEventListener("click", settingsSheet);
@@ -630,19 +771,17 @@ function renderProgress(m) {
 
 /* ----- settings sheet ----- */
 function settingsSheet() {
-  openSheet('<h2>Settings</h2>' +
-    '<label class="field">Next class test date</label><input type="date" id="st-test" value="' + esc(S.settings.testDate) + '">' +
-    '<label class="field">AP exam date (May)</label><input type="date" id="st-ap" value="' + esc(S.settings.apDate) + '">' +
+  openSheet('<h2>' + esc(COURSE.short) + ' settings</h2>' +
+    (COURSE.dates || []).map(d => '<label class="field">' + esc(d.field) + '</label><input type="date" data-datekey="' + esc(d.key) + '" value="' + esc(S.settings[d.key] || "") + '">').join("") +
     '<label class="field">Backup your progress</label>' +
-    '<p class="muted" style="margin:0 0 8px">Progress lives on this device. To move it (say, phone to laptop), copy the code here and paste it on the other device.</p>' +
+    '<p class="muted" style="margin:0 0 8px">Progress for this course lives on this device. To move it (say, phone to laptop), copy the code here and paste it on the other device.</p>' +
     '<div class="row"><button class="btn small secondary grow" id="st-export">Copy backup code</button>' +
     '<button class="btn small secondary grow" id="st-import">Paste to restore</button></div>' +
     '<textarea id="st-blob" placeholder="Backup code appears / gets pasted here" style="margin-top:8px"></textarea>' +
     '<div style="height:14px"></div>' +
-    '<button class="btn block secondary" id="st-reset" style="color:var(--bad)">Reset all progress</button>' +
+    '<button class="btn block secondary" id="st-reset" style="color:var(--bad)">Reset all ' + esc(COURSE.short) + ' progress</button>' +
     '<div style="height:8px"></div><button class="btn block" id="st-done">Done</button>');
-  $("#st-test").addEventListener("change", e => { S.settings.testDate = e.target.value; save(); });
-  $("#st-ap").addEventListener("change", e => { S.settings.apDate = e.target.value; save(); });
+  $("#sheet").querySelectorAll("[data-datekey]").forEach(inp => inp.addEventListener("change", e => { S.settings[inp.dataset.datekey] = e.target.value; save(); }));
   $("#st-export").addEventListener("click", () => {
     const blob = btoa(unescape(encodeURIComponent(JSON.stringify(S))));
     $("#st-blob").value = blob;
@@ -659,7 +798,7 @@ function settingsSheet() {
     } catch (e) { $("#st-blob").value = ""; $("#st-blob").placeholder = "That code didn’t parse. Copy it again from the other device."; }
   });
   $("#st-reset").addEventListener("click", () => {
-    if (confirm("Erase all progress on this device? This cannot be undone.")) { S = fresh(); save(); closeSheet(); render(); }
+    if (confirm("Erase all " + COURSE.short + " progress on this device? This cannot be undone.")) { S = fresh(); save(); closeSheet(); render(); }
   });
   $("#st-done").addEventListener("click", () => { closeSheet(); render(); });
 }
@@ -674,11 +813,10 @@ function simQ(id) {
   for (const d of DOMAINS) { const q = domainQuiz(d).find(x => x.id === id); if (q) return { q, d }; }
   return null;
 }
-const SIM_SPEC = { minutes: 30, mix: { eco: 4, terr: 4, aqua: 4, cycles: 6, prod: 3, energy: 4 } };
 function startSim() {
   if (S.sim && !S.sim.submitted) { go("exam"); return; }
-  openSheet('<h2>Unit 1 practice test</h2>' +
-    '<p class="sub">25 questions, 30 minutes, mixed across all six topics. No feedback until you submit, just like the real thing.</p>' +
+  openSheet('<h2>' + esc(COURSE.short) + ' practice test</h2>' +
+    '<p class="sub">' + simCount() + " questions, " + SIM_SPEC.minutes + " minutes, mixed across all " + DOMAINS.length + " topics. No feedback until you submit, just like the real thing.</p>" +
     '<button class="btn block" id="sim-go">Start the clock</button>');
   $("#sim-go").addEventListener("click", () => { closeSheet(); beginSim(); });
 }
@@ -703,7 +841,7 @@ function submitSim(auto) {
     }
   });
   sim.submitted = true; sim.score = score; sim.auto = !!auto;
-  S.hist.push({ t: Date.now(), mode: "exam", kind: "unit1", dom: null, n: sim.qids.length, c: score });
+  S.hist.push({ t: Date.now(), mode: "exam", kind: COURSE.id, dom: null, n: sim.qids.length, c: score });
   if (S.hist.length > 400) S.hist = S.hist.slice(-400);
   save();
   view = { name: "exam" };
@@ -716,12 +854,13 @@ function renderExam(m) {
   if (sim.submitted) return view.review != null ? renderExamReview(m) : renderExamResults(m);
 
   const i = sim.i, item = simQ(sim.qids[i]);
+  if (!item) { S.sim = null; save(); return go("study"); }
   const picked = sim.answers[i];
   const flagged = sim.flags.includes(i);
   const answeredCount = Object.keys(sim.answers).length;
   m.innerHTML =
     '<div class="row"><button class="btn small secondary" id="ex-exit">✕</button>' +
-    '<div class="grow center"><span class="chip">Unit 1 · <span id="ex-timer" class="ex-timer">' + fmtTime(sim.endAt - Date.now()) + "</span></span></div>" +
+    '<div class="grow center"><span class="chip">' + esc(COURSE.short) + ' · <span id="ex-timer" class="ex-timer">' + fmtTime(sim.endAt - Date.now()) + "</span></span></div>" +
     '<button class="btn small secondary' + (flagged ? " flag-on" : "") + '" id="ex-flag">⚑' + (flagged ? " Flagged" : " Flag") + "</button></div>" +
     '<div class="palette">' + sim.qids.map((_, pi) => {
       let cls = "pal";
@@ -763,7 +902,7 @@ function renderExam(m) {
 
   if (EXTIMER) clearInterval(EXTIMER);
   EXTIMER = setInterval(() => {
-    if (view.name !== "exam" || !S.sim || S.sim.submitted) { clearInterval(EXTIMER); EXTIMER = null; return; }
+    if (view.name !== "exam" || !S || !S.sim || S.sim.submitted) { clearInterval(EXTIMER); EXTIMER = null; return; }
     const rem = S.sim.endAt - Date.now();
     if (rem <= 0) { clearInterval(EXTIMER); EXTIMER = null; submitSim(true); return; }
     const el = document.getElementById("ex-timer");
@@ -781,7 +920,7 @@ function renderExamResults(m) {
     if (Number(sim.answers[i]) === item.q.answer) byDom[item.d].c++;
   });
   m.innerHTML = '<div class="center" style="padding-top:24px"><div class="summary-hero">' + score + "/" + n + "</div>" +
-    '<p class="sub">Unit 1 practice test · ' + pct(p) + "%" + (sim.auto ? " · time expired" : "") + " · " +
+    '<p class="sub">' + esc(COURSE.short) + " practice test · " + pct(p) + "%" + (sim.auto ? " · time expired" : "") + " · " +
     (p >= 0.85 ? "That’s an A. Keep every topic warm and you’re set." : p >= 0.7 ? "Right in the fight. Review the misses below and retake in a couple of days." : "This is exactly what practice tests are for. Every miss becomes a flashcard rep.") + "</p></div>" +
     '<div class="card">' + DOMAINS.filter(d => byDom[d]).map(d =>
       '<div class="topic-pill" style="--dc:' + domColor(d) + '"><span class="row"><span class="dot"></span>' + esc(domShort(d)) + "</span><b>" + byDom[d].c + "/" + byDom[d].n + "</b></div>").join("") + "</div>" +
@@ -822,7 +961,9 @@ function renderExamReview(m) {
 }
 
 /* ---------- boot ---------- */
-render();
+/* Always land on the hub. A single-course build skips it. A course with a live practice test resumes straight into it. */
+if (COURSES.length === 1) { loadCourse(COURSES[0].id); go(S.sim && !S.sim.submitted ? "exam" : "home"); }
+else render();
 if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
   navigator.serviceWorker.register("sw.js").catch(function () {});
 }

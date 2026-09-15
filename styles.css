@@ -1,4 +1,4 @@
-/* Terra - AP Environmental Science prep. Mobile-first, light+dark. */
+/* Terra - study hub (APES + Statistics). Mobile-first, light+dark. */
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html { color-scheme: light dark; }
 body {
@@ -32,8 +32,18 @@ body {
   --d-cycles: #4a3aa7;
   --d-prod: #e87ba4;
   --d-energy: #eb6834;
+  /* Statistics topic colors */
+  --d-dtype: #2a78d6;
+  --d-socv: #4a3aa7;
+  --d-calc: #eda100;
+  --d-box: #008300;
+  --d-freq: #e87ba4;
 }
+/* per-course accent */
+:root[data-course="stats"] { --accent: #2a78d6; }
+
 @media (prefers-color-scheme: dark) {
+  :root[data-course="stats"] { --accent: #3987e5; }
   :root {
     color-scheme: dark;
     --surface-0: #131312;
@@ -49,14 +59,17 @@ body {
     --warn: #c98500;
     --ring-track: #2e2e2b;
     /* dark steps of the same hues */
-    --d-orientation-ethics: #3987e5;
-    --d-social-cultural: #d95926;
-    --d-human-development: #199e70;
-    --d-career: #c98500;
-    --d-helping-relationships: #d55181;
-    --d-group: #35a835;
-    --d-assessment: #9085e9;
-    --d-research: #e66767;
+    --d-eco: #35a835;
+    --d-terr: #c98500;
+    --d-aqua: #3987e5;
+    --d-cycles: #9085e9;
+    --d-prod: #d55181;
+    --d-energy: #d95926;
+    --d-dtype: #3987e5;
+    --d-socv: #9085e9;
+    --d-calc: #c98500;
+    --d-box: #35a835;
+    --d-freq: #d55181;
   }
 }
 
@@ -287,3 +300,23 @@ label.field { display: block; font-size: 13px; font-weight: 600; color: var(--te
 }
 .bank-chip.used { opacity: 0.32; }
 .lab-svg-base { fill: none; }
+
+/* ---------- course hub ---------- */
+.no-tabs .tabbar { display: none; }
+.no-tabs .main { padding-bottom: calc(env(safe-area-inset-bottom) + 28px); }
+.course-bar { margin-bottom: 6px; }
+.hub-card { padding: 16px; }
+.hub-card .ring-wrap { width: 62px; height: 62px; flex: none; }
+.hub-name { font-size: 17px; }
+.hub-status { margin-top: 2px; }
+.hub-count { margin: 10px 0 0; font-size: 13px; color: var(--text-secondary); }
+.hub-count b { font-size: 18px; color: var(--text-primary); }
+.hub-open { margin-top: 12px; color: #fff; }
+
+/* ---------- worked examples ---------- */
+.worked-card { display: block; width: 100%; text-align: left; cursor: pointer; font: inherit; color: inherit; }
+.worked-card .row { align-items: center; }
+.steps { padding-left: 22px; margin: 6px 0 14px; }
+.steps li { margin-bottom: 12px; font-size: 15px; line-height: 1.5; }
+.steps li b { display: block; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--accent); margin-bottom: 2px; }
+.steps li div { color: var(--text-primary); }
