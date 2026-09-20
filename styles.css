@@ -33,6 +33,14 @@ body {
   --d-prod: #e87ba4;
   --d-energy: #eb6834;
   /* Statistics topic colors */
+  --d-bio: #1d4ed8;
+  --d-serv: #c2410c;
+  --d-isl: #0f766e;
+  --d-tol: #9f1239;
+  --d-dist: #db2777;
+  --d-adapt: #6d28d9;
+  --d-succ: #15803d;
+
   --d-dtype: #2a78d6;
   --d-socv: #4a3aa7;
   --d-calc: #eda100;
@@ -65,6 +73,13 @@ body {
     --d-cycles: #9085e9;
     --d-prod: #d55181;
     --d-energy: #d95926;
+    --d-bio: #5b8def;
+    --d-serv: #e07b47;
+    --d-isl: #3cae9f;
+    --d-tol: #e05575;
+    --d-dist: #ef74ae;
+    --d-adapt: #a48ae8;
+    --d-succ: #3fae62;
     --d-dtype: #3987e5;
     --d-socv: #9085e9;
     --d-calc: #c98500;

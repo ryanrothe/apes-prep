@@ -1,10 +1,12 @@
 /* Terra service worker. RULE: bump CACHE on ANY file change or installed copies keep serving stale files. */
-const CACHE = "terra-prep-v2";
+const CACHE = "terra-prep-v3";
 const ASSETS = [
   ".", "index.html", "styles.css", "app.js", "manifest.webmanifest",
   "data/courses.js",
   "data/eco.js", "data/terr.js", "data/aqua.js", "data/cycles.js",
   "data/prod.js", "data/energy.js", "data/diagrams.js",
+  "data/u2-bio.js", "data/u2-serv.js", "data/u2-isl.js", "data/u2-tol.js",
+  "data/u2-dist.js", "data/u2-adapt.js", "data/u2-succ.js", "data/u2-diagrams.js",
   "data/stats-dtype.js", "data/stats-socv.js", "data/stats-calc.js", "data/stats-box.js", "data/stats-freq.js",
   "data/stats-diagrams.js", "data/stats-worked.js",
   "icons/icon-192.png", "icons/icon-512.png", "icons/icon-180.png"

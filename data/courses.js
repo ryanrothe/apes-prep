@@ -9,13 +9,23 @@ window.COURSES = [
     tagline: "AP Environmental Science, one step at a time.",
     color: "#1e8f52",
     storageKey: "apesPrep.v1",
-    domains: ["eco", "terr", "aqua", "cycles", "prod", "energy"],
-    units: { 1: "Unit 1 · The Living World: Ecosystems" },
+    domains: ["eco", "terr", "aqua", "cycles", "prod", "energy",
+      "bio", "serv", "isl", "tol", "dist", "adapt", "succ"],
+    units: {
+      1: "Unit 1 · The Living World: Ecosystems",
+      2: "Unit 2 · The Living World: Biodiversity"
+    },
     dates: [
       { key: "testDate", label: "unit test", field: "Next class test date" },
       { key: "apDate", label: "AP exam", field: "AP exam date (May)" }
     ],
-    sim: { minutes: 30, mix: { eco: 4, terr: 4, aqua: 4, cycles: 6, prod: 3, energy: 4 } }
+    sim: {
+      minutes: 40,
+      mix: {
+        eco: 2, terr: 2, aqua: 2, cycles: 2, prod: 1, energy: 1,
+        bio: 4, serv: 3, isl: 3, tol: 3, dist: 3, adapt: 3, succ: 5
+      }
+    }
   },
   {
     id: "stats",
