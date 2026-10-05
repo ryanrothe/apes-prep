@@ -1,5 +1,5 @@
 /* Terra service worker. RULE: bump CACHE on ANY file change or installed copies keep serving stale files. */
-const CACHE = "terra-prep-v3";
+const CACHE = "terra-prep-v4";
 const ASSETS = [
   ".", "index.html", "styles.css", "app.js", "manifest.webmanifest",
   "data/courses.js",
@@ -9,6 +9,8 @@ const ASSETS = [
   "data/u2-dist.js", "data/u2-adapt.js", "data/u2-succ.js", "data/u2-diagrams.js",
   "data/stats-dtype.js", "data/stats-socv.js", "data/stats-calc.js", "data/stats-box.js", "data/stats-freq.js",
   "data/stats-diagrams.js", "data/stats-worked.js",
+  "data/psych-hered.js", "data/psych-ns.js", "data/psych-neur.js", "data/psych-chem.js", "data/psych-drugs.js",
+  "data/psych-brain.js", "data/psych-hemi.js", "data/psych-sleep.js", "data/psych-diagrams.js",
   "icons/icon-192.png", "icons/icon-512.png", "icons/icon-180.png"
 ];
 self.addEventListener("install", e => {

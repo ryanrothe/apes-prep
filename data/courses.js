@@ -40,5 +40,26 @@ window.COURSES = [
       { key: "testDate", label: "retake / test", field: "Next test or retake date" }
     ],
     sim: { minutes: 25, mix: { dtype: 4, socv: 5, calc: 6, box: 5, freq: 5 } }
+  },
+  {
+    /* Vocabulary-first course: each domain carries `terms`, which power the word drills, two-way flashcards,
+       the word list, and `sim.terms` generated definition questions in the practice test. */
+    id: "psych",
+    name: "AP Psychology",
+    short: "AP Psych",
+    tagline: "Know the word, the meaning, and where it shows up in real life.",
+    color: "#7c3aed",
+    storageKey: "psychPrep.v1",
+    domains: ["hered", "ns", "neur", "chem", "drugs", "brain", "hemi", "sleep"],
+    units: { 1: "Unit 1 · Biological Bases of Behavior" },
+    dates: [
+      { key: "testDate", label: "unit test", field: "Next test date (definitions test, unit test)" },
+      { key: "apDate", label: "AP exam", field: "AP exam date (May)" }
+    ],
+    sim: {
+      minutes: 30,
+      mix: { hered: 2, ns: 2, neur: 3, chem: 3, drugs: 2, brain: 3, hemi: 2, sleep: 3 },
+      terms: 20
+    }
   }
 ];
