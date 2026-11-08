@@ -41,6 +41,16 @@ body {
   --d-adapt: #6d28d9;
   --d-succ: #15803d;
 
+  --d-tect: #b45309;
+  --d-soilf: #7c4a1e;
+  --d-soilp: #a21caf;
+  --d-atmo: #0369a1;
+  --d-wind: #0d9488;
+  --d-wshed: #4338ca;
+  --d-insol: #ca8a04;
+  --d-clim: #be185d;
+  --d-enso: #dc2626;
+
   --d-dtype: #2a78d6;
   --d-socv: #4a3aa7;
   --d-calc: #eda100;
@@ -91,6 +101,15 @@ body {
     --d-dist: #ef74ae;
     --d-adapt: #a48ae8;
     --d-succ: #3fae62;
+    --d-tect: #e08a3c;
+    --d-soilf: #c08552;
+    --d-soilp: #d36ae0;
+    --d-atmo: #4aa3d8;
+    --d-wind: #3cc0b2;
+    --d-wshed: #8b85f0;
+    --d-insol: #e3b23c;
+    --d-clim: #ec6aa6;
+    --d-enso: #f06a6a;
     --d-dtype: #3987e5;
     --d-socv: #9085e9;
     --d-calc: #c98500;

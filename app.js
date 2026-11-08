@@ -1327,13 +1327,13 @@ function genTermQuestions(n) {
 function startSim() {
   if (S.sim && !S.sim.submitted) { go("exam"); return; }
   openSheet('<h2>' + esc(COURSE.short) + ' practice test</h2>' +
-    '<p class="sub">' + simCount() + " questions, " + SIM_SPEC.minutes + " minutes, mixed across all " + DOMAINS.length + " topics. No feedback until you submit, just like the real thing.</p>" +
+    '<p class="sub">' + simCount() + " questions, " + SIM_SPEC.minutes + " minutes, mixed across " + DOMAINS.filter(d => (SIM_SPEC.mix[d] ?? 4) > 0).length + " topics. No feedback until you submit, just like the real thing.</p>" +
     '<button class="btn block" id="sim-go">Start the clock</button>');
   $("#sim-go").addEventListener("click", () => { closeSheet(); beginSim(); });
 }
 function beginSim() {
   const qids = [];
-  DOMAINS.forEach(d => shuffle(domainQuiz(d)).slice(0, SIM_SPEC.mix[d] || 4).forEach(q => qids.push(q.id)));
+  DOMAINS.forEach(d => shuffle(domainQuiz(d)).slice(0, SIM_SPEC.mix[d] ?? 4).forEach(q => qids.push(q.id)));
   const gen = SIM_SPEC.terms ? genTermQuestions(SIM_SPEC.terms) : [];
   gen.forEach((_, j) => qids.push("g:" + j));
   S.sim = { qids: shuffle(qids), gen, endAt: Date.now() + SIM_SPEC.minutes * 60000, answers: {}, flags: [], i: 0, submitted: false, score: 0 };

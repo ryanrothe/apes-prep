@@ -10,20 +10,25 @@ window.COURSES = [
     color: "#1e8f52",
     storageKey: "apesPrep.v1",
     domains: ["eco", "terr", "aqua", "cycles", "prod", "energy",
-      "bio", "serv", "isl", "tol", "dist", "adapt", "succ"],
+      "bio", "serv", "isl", "tol", "dist", "adapt", "succ",
+      "tect", "soilf", "soilp", "atmo", "wind", "wshed", "insol", "clim", "enso"],
     units: {
       1: "Unit 1 · The Living World: Ecosystems",
-      2: "Unit 2 · The Living World: Biodiversity"
+      2: "Unit 2 · The Living World: Biodiversity",
+      4: "Unit 4 · Earth Systems and Resources"
     },
     dates: [
       { key: "testDate", label: "unit test", field: "Next class test date" },
       { key: "apDate", label: "AP exam", field: "AP exam date (May)" }
     ],
     sim: {
-      minutes: 40,
+      /* Weighted to the newest unit (the next class test); a few earlier-unit questions keep retention honest.
+         A 0 means "skip this topic" (the engine only defaults to 4 when a domain is missing from the mix). */
+      minutes: 45,
       mix: {
-        eco: 2, terr: 2, aqua: 2, cycles: 2, prod: 1, energy: 1,
-        bio: 4, serv: 3, isl: 3, tol: 3, dist: 3, adapt: 3, succ: 5
+        eco: 1, terr: 1, aqua: 0, cycles: 1, prod: 0, energy: 1,
+        bio: 1, serv: 1, isl: 1, tol: 1, dist: 1, adapt: 0, succ: 1,
+        tect: 4, soilf: 3, soilp: 4, atmo: 3, wind: 4, wshed: 3, insol: 3, clim: 3, enso: 3
       }
     }
   },

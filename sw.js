@@ -1,5 +1,5 @@
 /* Terra service worker. RULE: bump CACHE on ANY file change or installed copies keep serving stale files. */
-const CACHE = "terra-prep-v4";
+const CACHE = "terra-prep-v5";
 const ASSETS = [
   ".", "index.html", "styles.css", "app.js", "manifest.webmanifest",
   "data/courses.js",
@@ -7,6 +7,8 @@ const ASSETS = [
   "data/prod.js", "data/energy.js", "data/diagrams.js",
   "data/u2-bio.js", "data/u2-serv.js", "data/u2-isl.js", "data/u2-tol.js",
   "data/u2-dist.js", "data/u2-adapt.js", "data/u2-succ.js", "data/u2-diagrams.js",
+  "data/u4-tect.js", "data/u4-soilf.js", "data/u4-soilp.js", "data/u4-atmo.js", "data/u4-wind.js",
+  "data/u4-wshed.js", "data/u4-insol.js", "data/u4-clim.js", "data/u4-enso.js", "data/u4-diagrams.js",
   "data/stats-dtype.js", "data/stats-socv.js", "data/stats-calc.js", "data/stats-box.js", "data/stats-freq.js",
   "data/stats-diagrams.js", "data/stats-worked.js",
   "data/psych-hered.js", "data/psych-ns.js", "data/psych-neur.js", "data/psych-chem.js", "data/psych-drugs.js",
