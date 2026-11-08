@@ -19,10 +19,10 @@ window.EXAM_DATA.domains["succ"] = {
     { id: "su-q2", topic: "Definition",
       q: "Stages of succession are characterized by:",
       choices: [
-        "The temperature of the area",
-        "How much rain falls each year",
+        "The average temperature of the area each year",
+        "How much rain falls on the area each year",
         "Which types of plant species dominate the ecosystem",
-        "How many animals are present"
+        "How many animals are present at each stage"
       ],
       answer: 2,
       explain: "Each stage is named by which types of PLANT species dominate, because different plants are adapted to the conditions of different stages." },
@@ -49,10 +49,10 @@ window.EXAM_DATA.domains["succ"] = {
     { id: "su-q6", topic: "Secondary succession",
       q: "Secondary succession occurs:",
       choices: [
-        "On bare rock where no life has existed",
+        "On bare rock where no life or soil has existed",
         "In an already established ecosystem following a disturbance",
-        "Only in the ocean",
-        "Only after a volcano"
+        "Only in the ocean, after a storm stirs the water",
+        "Only after a volcano covers the land in lava"
       ],
       answer: 1,
       explain: "Secondary succession happens in an ALREADY ESTABLISHED ecosystem after a disturbance. The soil survives, which is the key difference." },
@@ -94,10 +94,10 @@ window.EXAM_DATA.domains["succ"] = {
     { id: "su-q11", topic: "Pioneer stage",
       q: "Pioneer or early successional species are best described as:",
       choices: [
-        "Species that only grow in deep soil",
-        "Slow-growing shade-tolerant trees",
+        "Species that only grow in deep, rich soil that took centuries to form",
+        "Slow-growing, shade-tolerant trees that take over in the final stage",
         "First colonizing species, fast growing, with seeds spread by wind or animals",
-        "Large predators that arrive first"
+        "Large predators that arrive first and control the other species"
       ],
       answer: 2,
       explain: "Pioneers are the FIRST COLONIZING species: fast growing, seeds spread by wind or animals. Mosses, lichens, grasses, and wildflowers." },
@@ -114,10 +114,10 @@ window.EXAM_DATA.domains["succ"] = {
     { id: "su-q13", topic: "Climax stage",
       q: "A late successional or climax community is characterized by:",
       choices: [
-        "No plant life at all",
-        "Bare rock and lichens",
+        "No plant life at all, just bare rock after a disturbance",
+        "Bare rock covered in lichens and mosses breaking it down",
         "Deepened soil enriched by nutrient cycling, with large slow-growing trees",
-        "Only annual plants"
+        "Mostly fast-growing annual plants and grasses in thin soil"
       ],
       answer: 2,
       explain: "The climax community has DEEPENED soil enriched by nutrient cycling and large, slow-growing trees such as maple and oak. It is the stable end stage." },
@@ -139,10 +139,10 @@ window.EXAM_DATA.domains["succ"] = {
     { id: "su-q16", topic: "Invasive species",
       q: "An invasive species is:",
       choices: [
-        "Any species that is not the most common in an area",
+        "Any species that is not the most common one in an area, native or not",
         "A non-native organism that spreads rapidly and causes ecological or economic harm",
-        "A native species that grows quickly",
-        "A species that only lives on islands"
+        "A native species that grows quickly after a fire or other disturbance",
+        "A species that only lives on islands and nowhere on the mainland"
       ],
       answer: 1,
       explain: "Invasive means NON-NATIVE, rapidly spreading, causing ecological or economic harm, and LACKING natural predators or controls in its new environment." },
@@ -164,29 +164,29 @@ window.EXAM_DATA.domains["succ"] = {
     { id: "su-q19", topic: "Invasive species",
       q: "Which pair describes how invasives disrupt an ecosystem?",
       choices: [
-        "Pollinating crops and purifying water",
-        "Creating wildlife corridors",
-        "Stealing food and space through resource competition, and spreading pathogens or destroying local wildlife",
-        "Building soil and increasing nutrients"
+        "Pollinating crops and purifying water, which raises the value of the land",
+        "Creating wildlife corridors that connect habitat fragments for native animals",
+        "Competing for food and space, and spreading disease or killing local wildlife",
+        "Building deeper soil and adding nutrients that help the native plants"
       ],
       answer: 2,
       explain: "Two mechanisms from the notes: resource competition (stealing food and space) and spreading pathogens or destroying local wildlife outright." },
     { id: "su-q20", topic: "Indicator species",
       q: "An indicator species is an organism whose presence, absence, or health:",
       choices: [
-        "Determines the entire structure of the food web",
-        "Only matters in the ocean",
-        "Has no relationship to the environment",
-        "Reflects a specific environmental condition, pollution level, or stage of succession"
+        "Determines the entire structure of the food web, like a support beam",
+        "Only matters in ocean ecosystems, never in forests or grasslands",
+        "Has no relationship to its environment, since it can live anywhere",
+        "Reveals an environmental condition, a pollution level, or a stage of succession"
       ],
       answer: 3,
       explain: "Indicator species are a readout of conditions. Their PRESENCE indicates HEALTH, and their decline is a warning sign of change coming." },
     { id: "su-q21", topic: "Indicator species",
       q: "Why do indicator species tend to be specialists?",
       choices: [
-        "Specialists are always the largest species",
-        "Specialists can survive anything",
-        "Specialists reproduce the fastest",
+        "Specialists are always the largest species, so they are easy to spot",
+        "Specialists can survive any condition, so they are always present",
+        "Specialists reproduce the fastest, so their numbers change first",
         "Specialists have narrow tolerance ranges, so they react to small changes first"
       ],
       answer: 3,
@@ -199,19 +199,19 @@ window.EXAM_DATA.domains["succ"] = {
     { id: "su-q23", topic: "Keystone species",
       q: "A keystone species is one that:",
       choices: [
-        "Has the largest population in an ecosystem",
+        "Has the largest population of any species in the whole ecosystem",
         "Exerts a disproportionately large influence relative to its population size",
-        "Is always a plant",
-        "Is the fastest growing species present"
+        "Is always a plant at the very bottom of the food web",
+        "Is the fastest growing species to arrive after a disturbance"
       ],
       answer: 1,
       explain: "Keystone means DISPROPORTIONATE influence: a small population with a massive impact on the structure, diversity, and stability of the ecosystem." },
     { id: "su-q24", topic: "Keystone species",
       q: "Removing a keystone species causes:",
       choices: [
-        "No measurable change",
-        "An immediate increase in biodiversity",
-        "A change limited to one species",
+        "No measurable change, since other species fill its role",
+        "An immediate increase in biodiversity as competitors thrive",
+        "A change limited to the one species it used to eat",
         "Effects across all or most trophic levels, called a trophic cascade"
       ],
       answer: 3,
@@ -224,9 +224,9 @@ window.EXAM_DATA.domains["succ"] = {
     { id: "su-q26", topic: "Keystone species",
       q: "A graph shows about 17 species present while a keystone predator is there, dropping to near zero after it is removed. This demonstrates that the keystone predator:",
       choices: [
-        "Had no effect on the community",
-        "Increased pollution levels",
-        "Was the only species eating plants",
+        "Had no effect on the community, since diversity just changed randomly",
+        "Increased pollution levels, which killed off most of the other species",
+        "Was the only species eating the plants in the community",
         "Maintained species diversity by keeping competitors in check"
       ],
       answer: 3,

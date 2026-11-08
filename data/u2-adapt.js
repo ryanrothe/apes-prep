@@ -29,10 +29,10 @@ window.EXAM_DATA.domains["adapt"] = {
     { id: "ad-q3", topic: "Source of variation",
       q: "Genetic diversity creates variation through:",
       choices: [
-        "Competition and predation",
-        "Succession and fragmentation",
+        "Competition and predation between members of the same species",
+        "Succession and habitat fragmentation changing where species live",
         "Random mutation of DNA and crossing over of parent DNA in meiosis",
-        "Migration and hibernation"
+        "Migration and hibernation when the seasons change each year"
       ],
       answer: 2,
       explain: "Two sources: random DNA mutation makes brand new versions of genes, and crossing over during meiosis shuffles parent DNA into new combinations." },
@@ -59,9 +59,9 @@ window.EXAM_DATA.domains["adapt"] = {
     { id: "ad-q6", topic: "Selective pressure",
       q: "A selective pressure is:",
       choices: [
-        "The weight of an organism's body",
-        "A gene that never mutates",
-        "The speed at which a population grows",
+        "A gene that is passed on to every offspring",
+        "The body weight an organism needs to survive",
+        "The speed at which a population grows each year",
         "An environmental condition that kills weaker organisms"
       ],
       answer: 3,
@@ -69,9 +69,9 @@ window.EXAM_DATA.domains["adapt"] = {
     { id: "ad-q7", topic: "Natural selection",
       q: "In the mouse and hawk example, dark mice on dark soil survive better. Over generations the population becomes darker because:",
       choices: [
-        "Hawks decide to eat only light mice for fun",
-        "Dark mice live forever",
-        "Light mice turn dark to hide",
+        "Hawks decide to eat only light mice, so light mice choose darker soil",
+        "Dark mice live longer, so each one keeps having babies for many years",
+        "Light mice turn dark over their lifetime so they can hide from hawks",
         "Light mice are eaten more, so dark mice reproduce and pass on the trait"
       ],
       answer: 3,
@@ -84,20 +84,20 @@ window.EXAM_DATA.domains["adapt"] = {
     { id: "ad-q9", topic: "Environment decides",
       q: "As the environment changes:",
       choices: [
-        "Genetic diversity disappears",
-        "Traits stay adaptations forever",
-        "Different traits may become adaptations and old traits may become disadvantages",
-        "All organisms stop reproducing"
+        "Genetic diversity disappears, because new traits stop forming",
+        "Traits that were adaptations stay adaptations forever, no matter what",
+        "New traits can become adaptations, and old ones can become disadvantages",
+        "All organisms stop reproducing until the old conditions come back"
       ],
       answer: 2,
       explain: "There is no permanently good trait. When conditions shift, yesterday's advantage can become today's disadvantage, and traits that were useless suddenly matter." },
     { id: "ad-q10", topic: "Finch beaks",
       q: "In the 1977 Galapagos drought, the mean beak depth of surviving finches increased. Why?",
       choices: [
-        "Drought made all finches grow bigger beaks",
+        "The drought made every finch grow a bigger beak during its lifetime",
         "Only hard seeds remained, so birds with larger beaks could crack them and survive",
-        "Small-beaked finches migrated to the mainland",
-        "Larger beaks helped the birds drink more water"
+        "Small-beaked finches all migrated to the mainland to find soft seeds",
+        "Larger beaks helped the birds drink more water during the dry season"
       ],
       answer: 1,
       explain: "The drought killed off soft seeds. Finches with smaller beaks could not crack the hard ones and died. Larger beaks became an adaptation because the FOOD changed." },
@@ -110,9 +110,9 @@ window.EXAM_DATA.domains["adapt"] = {
       q: "The more rapidly an environment changes:",
       choices: [
         "The less likely a species is to adapt to those changes",
-        "The faster mutations occur",
-        "The larger every population gets",
-        "The more likely a species is to adapt"
+        "The faster new mutations appear to help it",
+        "The larger every population gets over time",
+        "The more likely a species is to adapt to them"
       ],
       answer: 0,
       explain: "Adaptation takes generations. If conditions change faster than a species can produce those generations, it cannot keep up, so it migrates or dies." },
@@ -135,9 +135,9 @@ window.EXAM_DATA.domains["adapt"] = {
       q: "The more genetic diversity a population has:",
       choices: [
         "The greater its chance of survival, since some individuals may have good mutations",
-        "The fewer offspring it produces",
-        "The faster it goes extinct",
-        "The lower its chance of survival"
+        "The fewer offspring it produces, since energy goes to making new genes",
+        "The faster it goes extinct, since its members are too different to mate",
+        "The lower its chance of survival, since mutations are always harmful"
       ],
       answer: 0,
       explain: "More genetic diversity means a higher chance that SOME individuals already carry a useful mutation when conditions change. It is the same insurance idea as the potato blight." },
@@ -155,9 +155,9 @@ window.EXAM_DATA.domains["adapt"] = {
       q: "Bacteria evolve in days while humans take thousands of years because:",
       choices: [
         "Bacteria reproduce in a much shorter generation time",
-        "Humans never mutate",
-        "Bacteria choose to evolve",
-        "Bacteria have more DNA"
+        "Human DNA never mutates, so humans cannot evolve",
+        "Bacteria choose to evolve whenever they need to",
+        "Bacteria have much more DNA than humans do"
       ],
       answer: 0,
       explain: "Bacteria: days. Humans: thousands of years. Short generations stack up mutations and selection rounds far faster, which is why antibiotic resistance appears so quickly." },

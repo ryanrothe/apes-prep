@@ -9,10 +9,10 @@ window.EXAM_DATA.domains["soilf"] = {
     { id: "sf-q1", topic: "What is soil",
       q: "Soil is a mix of:",
       choices: [
-        "Only broken rock",
+        "Only broken rock, ground down very fine",
         "Only dead leaves and animal waste",
         "Geological (rock) and organic (living) components",
-        "Water and air with no solids"
+        "Water and air, with very few solids"
       ],
       answer: 2,
       explain: "Soil = rock pieces (sand, silt, clay) PLUS organic stuff (humus, living organisms), along with water, air, and nutrients like N and P." },
@@ -64,10 +64,10 @@ window.EXAM_DATA.domains["soilf"] = {
     { id: "sf-q8", topic: "Erosion",
       q: "Erosion is:",
       choices: [
-        "The breakdown of rocks into small pieces",
-        "The buildup of humus in the O horizon",
+        "The breakdown of rocks into small pieces by rain",
+        "The buildup of humus in the O horizon over time",
         "The transport of rock fragments and soil by wind or water",
-        "The formation of new crust at a ridge"
+        "The formation of new crust at a mid-ocean ridge"
       ],
       answer: 2,
       explain: "Erosion = TRANSPORT. Wind or rain picks up loosened soil and rock and carries it away. Soil does not like erosion: it strips away the most fertile layer." },
@@ -84,8 +84,8 @@ window.EXAM_DATA.domains["soilf"] = {
     { id: "sf-q10", topic: "Role of soil",
       q: "Which is NOT one of the roles soil plays in an ecosystem?",
       choices: [
-        "Anchoring plant roots",
-        "Filtering rainwater and runoff",
+        "Anchoring plant roots so they stay upright",
+        "Filtering rainwater and runoff as it soaks in",
         "Producing most of Earth's oxygen through photosynthesis",
         "Recycling nutrients through decomposers"
       ],

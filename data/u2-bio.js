@@ -64,10 +64,10 @@ window.EXAM_DATA.domains["bio"] = {
     { id: "bd-q7", topic: "Evenness",
       q: "Species evenness measures:",
       choices: [
-        "How fast the population is growing",
+        "How fast the populations of each species are growing",
         "How balanced the population sizes of the different species are",
-        "How many species there are in total",
-        "How many habitats are in the area"
+        "How many different species there are in total",
+        "How many different habitats are found in the area"
       ],
       answer: 1,
       explain: "Evenness is about BALANCE. Four tree species at 25 percent each is very even. One species at 70 percent with the rest squeezed underneath is uneven." },
@@ -94,9 +94,9 @@ window.EXAM_DATA.domains["bio"] = {
     { id: "bd-q10", topic: "Genetic diversity",
       q: "Which two processes create genetic diversity?",
       choices: [
-        "Inbreeding and bottlenecks",
-        "Migration and hibernation",
-        "Cloning and grafting",
+        "Inbreeding and bottlenecks shrinking a population",
+        "Migration and hibernation during harsh seasons",
+        "Cloning and grafting by farmers and gardeners",
         "Random mutations in DNA and recombination of chromosomes"
       ],
       answer: 3,
@@ -105,28 +105,28 @@ window.EXAM_DATA.domains["bio"] = {
       q: "A blight sweeps through two potato fields. The field of genetically diverse potatoes loses some plants, but the field of cloned potatoes is wiped out completely. Why?",
       choices: [
         "The clones are genetically identical, so if one is susceptible they all are",
-        "Clones have more predators",
-        "Diverse potatoes are immune to all disease",
-        "Cloned potatoes grow slower"
+        "Clones attract more predators, which spread the blight between plants",
+        "Genetically diverse potatoes are immune to every kind of disease",
+        "Cloned potatoes grow slower, so the blight has more time to spread"
       ],
       answer: 0,
       explain: "Clones share one genome, so a disease that beats one beats every single plant. In the diverse field, some individuals happen to carry resistance and survive. That is exactly why genetic diversity matters." },
     { id: "bd-q12", topic: "Genetic diversity",
       q: "Higher genetic diversity in a population mainly increases the chance that:",
       choices: [
-        "The population stops mutating",
+        "The population stops mutating and stays stable for good",
         "Some individuals have traits that let them survive a new threat",
-        "The population becomes a new species",
-        "Every individual survives a disturbance"
+        "The population quickly splits into a brand new species",
+        "Every single individual survives the next disturbance"
       ],
       answer: 1,
       explain: "Genetic diversity is not a shield for everyone. It is a bigger deck of cards, so the odds go up that SOME individuals are already built to survive whatever comes." },
     { id: "bd-q13", topic: "Bottleneck effect",
       q: "The bottleneck effect happens when:",
       choices: [
-        "Two species compete for the same resource",
-        "Closely related organisms mate",
-        "A population slowly grows over many years",
+        "Two species compete for the same limited food or space",
+        "Closely related organisms mate and pass on harmful genes",
+        "A population grows slowly and steadily over many years",
         "An environmental disturbance drastically reduces population size"
       ],
       answer: 3,
@@ -134,9 +134,9 @@ window.EXAM_DATA.domains["bio"] = {
     { id: "bd-q14", topic: "Bottleneck effect",
       q: "Before a bottleneck a beetle population is 40% black, 10% brown, and 50% white. After the crash the survivors are 67% black and 33% brown. What happened to white?",
       choices: [
-        "White beetles migrated away to a new habitat",
-        "White beetles became the dominant allele",
-        "White beetles evolved into brown ones",
+        "White beetles migrated away to a new habitat before the storm",
+        "White beetles were better adapted, so the storm selected against them",
+        "White beetles slowly evolved into brown beetles after the storm",
         "White beetles were eliminated by random chance, so that gene version is gone"
       ],
       answer: 3,
@@ -155,19 +155,19 @@ window.EXAM_DATA.domains["bio"] = {
       q: "The biggest long-term problem for a population that just went through a bottleneck is:",
       choices: [
         "It has reduced genetic diversity, so it adapts poorly to the next threat",
-        "It has too many different genes",
-        "It will immediately go extinct",
-        "It can no longer reproduce at all"
+        "It has too many different genes, so members cannot mate easily",
+        "It will immediately go extinct no matter what happens next",
+        "It can no longer reproduce at all because so few are left"
       ],
       answer: 0,
       explain: "Even if numbers recover, the gene pool stays narrow. Reduced genetic diversity means fewer options when the next disease or climate shift arrives." },
     { id: "bd-q17", topic: "Inbreeding depression",
       q: "Inbreeding depression occurs when:",
       choices: [
-        "A population grows too quickly",
-        "A population migrates to a new habitat",
+        "A population grows too quickly for its food supply to keep up",
+        "A population migrates to a brand new habitat far from home",
         "Organisms mate with closely related members, raising harmful mutations",
-        "Two different species interbreed"
+        "Two different species mate and produce hybrid offspring"
       ],
       answer: 2,
       explain: "Close relatives carry the same recessive problem genes. When they mate, offspring are far more likely to get two copies, so harmful traits show up and fitness drops." },
@@ -184,10 +184,10 @@ window.EXAM_DATA.domains["bio"] = {
     { id: "bd-q19", topic: "Bottleneck vs inbreeding",
       q: "What is the key difference between the bottleneck effect and inbreeding depression?",
       choices: [
-        "They are two names for the same process",
-        "Bottleneck increases diversity, inbreeding decreases it",
-        "Bottleneck is caused by mating choices, inbreeding is caused by disasters",
-        "A bottleneck is a sudden crash from a disturbance, inbreeding is harm from relatives mating"
+        "They are two names for the exact same process that shrinks a population",
+        "A bottleneck increases genetic diversity, while inbreeding decreases it",
+        "A bottleneck comes from mating choices, inbreeding comes from disasters",
+        "Bottleneck: a sudden crash from a disturbance. Inbreeding: harm from relatives mating"
       ],
       answer: 3,
       explain: "A bottleneck is an EVENT that shrinks the population. Inbreeding depression is an ongoing CONSEQUENCE of a small gene pool. Both end with less genetic diversity, which is why they get mixed up." },
@@ -214,10 +214,10 @@ window.EXAM_DATA.domains["bio"] = {
     { id: "bd-q22", topic: "Resilience",
       q: "A farm grows one crop variety across every field. Compared with a diverse natural grassland, this farm is:",
       choices: [
-        "More resilient, because it has higher richness",
-        "More resilient, because all plants are the same",
+        "More resilient, because one variety means higher species richness",
+        "More resilient, because identical plants all defend each other",
         "Less resilient, because one pest or disease can take out everything",
-        "Equally resilient"
+        "Equally resilient, since a crop field is still an ecosystem"
       ],
       answer: 2,
       explain: "One variety means one set of weaknesses, the cloned-potato problem at farm scale. Low diversity equals low resilience." }

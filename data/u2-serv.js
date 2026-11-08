@@ -9,10 +9,10 @@ window.EXAM_DATA.domains["serv"] = {
     { id: "sv-q1", topic: "Definition",
       q: "Ecosystem services are:",
       choices: [
-        "Services humans provide to animals",
-        "Jobs people do to protect nature",
+        "Services humans provide to wild animals and plants",
+        "Jobs people do to protect nature and clean parks",
         "Goods and services from natural ecosystems that benefit humans",
-        "Government programs that clean up pollution"
+        "Government programs that clean up polluted areas"
       ],
       answer: 2,
       explain: "Ecosystem services are the free goods and benefits nature hands humans, often worth real money or necessary for life. The work is done by the ecosystem, not by people." },
@@ -54,9 +54,9 @@ window.EXAM_DATA.domains["serv"] = {
     { id: "sv-q8", topic: "Supporting",
       q: "Wetland plant roots filter polluted water before it reaches a river. This is a supporting service because:",
       choices: [
-        "Wetlands provide lumber",
-        "It regulates the climate",
-        "People pay to visit wetlands",
+        "The wetland provides lumber that people harvest and sell",
+        "It regulates the climate by storing carbon in its mud",
+        "People pay to visit the wetland and go bird-watching",
         "The wetland does water purification we would otherwise pay to do"
       ],
       answer: 3,
@@ -69,10 +69,10 @@ window.EXAM_DATA.domains["serv"] = {
     { id: "sv-q10", topic: "Cultural",
       q: "Which of these is the best example of a cultural ecosystem service?",
       choices: [
-        "Bees pollinating an orchard",
+        "Bees pollinating an apple orchard each spring",
         "Tourists paying to see a beautiful mountain landscape",
-        "A forest storing carbon",
-        "A wetland filtering water"
+        "A forest storing carbon in its trunks and roots",
+        "A wetland filtering polluted water before a river"
       ],
       answer: 1,
       explain: "Cultural services come from people valuing nature for experience or knowledge. Filtering, pollinating, and carbon storage are the other three categories." },
@@ -110,18 +110,18 @@ window.EXAM_DATA.domains["serv"] = {
       q: "Supporting services such as pollination and water purification are disrupted by:",
       choices: [
         "Pollinator habitat loss and filling in wetlands",
-        "Charging entrance fees at parks",
-        "Planting more native flowers",
-        "Reducing air pollution"
+        "Charging entrance fees at national parks",
+        "Planting more native flowers in yards",
+        "Reducing air pollution from factories"
       ],
       answer: 0,
       explain: "Kill the pollinators' habitat and crops lose free pollination. Fill the wetland and you lose free water filtering. Both are supporting services being destroyed." },
     { id: "sv-q16", topic: "Disruption",
       q: "Cultural services are most disrupted by:",
       choices: [
-        "Bees leaving an area",
-        "Rising ocean oxygen levels",
-        "Too many national parks",
+        "Bees leaving an area to find flowers",
+        "Rising oxygen levels in the ocean",
+        "Building too many national parks",
         "Pollution, urbanization, and deforestation"
       ],
       answer: 3,
@@ -129,10 +129,10 @@ window.EXAM_DATA.domains["serv"] = {
     { id: "sv-q17", topic: "Big idea",
       q: "The overall point of the disruptions row in this topic is that:",
       choices: [
-        "Only pollution matters",
-        "Humans always improve ecosystem function",
+        "Only pollution matters, since other disruptions do not change ecosystem value",
+        "Humans always improve ecosystem function when they change a landscape",
         "Human disruptions reduce an ecosystem's ability to function, which decreases its value",
-        "Ecosystem services cannot be measured in money"
+        "Ecosystem services cannot be measured in money, so they have no real value"
       ],
       answer: 2,
       explain: "Each of the four services has a matching human disruption, and every disruption lowers what the ecosystem is worth to us. That is the argument for protecting it." },
@@ -150,9 +150,9 @@ window.EXAM_DATA.domains["serv"] = {
       q: "Replacing a destroyed wetland with a built water treatment plant shows that:",
       choices: [
         "Ecosystem services have real monetary value we pay for once they are gone",
-        "Treatment plants are always cheaper",
-        "Wetlands only provide cultural services",
-        "Wetlands are not valuable"
+        "Treatment plants are always cheaper than keeping a wetland",
+        "Wetlands only provide cultural services like bird-watching",
+        "Wetlands are not valuable once a city has grown around them"
       ],
       answer: 0,
       explain: "The wetland did the job for free. Once it is filled in, the bill arrives as construction and operating costs. That price tag IS the value of the lost service." },

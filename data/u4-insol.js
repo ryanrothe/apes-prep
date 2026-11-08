@@ -44,10 +44,10 @@ window.EXAM_DATA.domains["insol"] = {
     { id: "si-q5", topic: "Intensity & latitude",
       q: "Why do high latitudes (near the poles) get less intense sunlight?",
       choices: [
-        "They are much farther from the Sun than the equator is, all year",
-        "The poles have no atmosphere, so sunlight escapes back to space",
-        "Rays hit at a low angle, spreading over a larger area and passing through more atmosphere",
-        "Thick ice blocks the sunlight before it can reach the ground there"
+        "They are much farther from the Sun than the equator is, all year long",
+        "The poles have no atmosphere, so the sunlight escapes back to space",
+        "Rays hit at a low angle, spreading out and passing through more atmosphere",
+        "Thick ice blocks the sunlight before it can ever reach the ground there"
       ],
       answer: 2,
       explain: "Think of a flashlight: aimed straight down, a small bright circle; tilted, a big dim oval. At high latitudes the same energy spreads over more ground and loses more in the thicker slice of atmosphere." },
@@ -55,9 +55,9 @@ window.EXAM_DATA.domains["insol"] = {
       q: "What causes Earth's seasons?",
       choices: [
         "Earth moving closer to the Sun in summer and farther away in winter",
-        "Earth's 23.5 degree tilt as it orbits the Sun, changing the angle of the Sun's rays",
-        "The Moon blocking part of the sunlight during certain months",
-        "The Sun burning hotter in summer and cooler during the winter"
+        "Earth's 23.5 degree tilt as it orbits, which changes the angle of the rays",
+        "The Moon blocking part of the sunlight during certain months of the year",
+        "The Sun itself burning hotter in summer and cooler during the winter"
       ],
       answer: 1,
       explain: "Seasons come from TILT, not distance. As Earth orbits, the tilt changes the angle of the rays and the length of the day in each hemisphere." },
@@ -85,9 +85,9 @@ window.EXAM_DATA.domains["insol"] = {
       q: "During the December solstice, which statement is true?",
       choices: [
         "The Southern Hemisphere is tilted toward the Sun and has summer",
-        "The Northern Hemisphere has its longest day",
-        "Every place gets 12 hours of daylight",
-        "The Sun is directly over the North Pole"
+        "The Northern Hemisphere is tilted toward the Sun and has its longest day",
+        "Every place on Earth gets exactly 12 hours of daylight that day",
+        "The Sun is directly over the North Pole for the whole day"
       ],
       answer: 0,
       explain: "December: north is max tilted AWAY (winter, shortest day), south is max tilted TOWARD (summer). That is why Australia has summer at Christmas." },
@@ -144,8 +144,8 @@ window.EXAM_DATA.domains["insol"] = {
     { id: "si-q16", topic: "Albedo",
       q: "How does albedo affect surface temperature?",
       choices: [
-        "High albedo surfaces trap the reflected light, so they are always hotter",
-        "Surfaces that absorb sunlight give off that energy as heat, so low albedo means hotter surfaces",
+        "High albedo surfaces trap the light they reflect, so they are always hotter",
+        "Absorbed sunlight is given off as heat, so low albedo surfaces get hotter",
         "Albedo only changes the stratosphere, not the temperature at the surface",
         "Albedo has no effect, because temperature only depends on latitude"
       ],

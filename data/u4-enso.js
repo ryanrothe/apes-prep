@@ -24,9 +24,9 @@ window.EXAM_DATA.domains["enso"] = {
     { id: "el-q3", topic: "Upwelling",
       q: "Upwelling is:",
       choices: [
-        "Warm water sinking to the ocean floor",
-        "Rain falling on the windward side of a mountain",
-        "Magma rising at a divergent boundary",
+        "Warm surface water sinking straight down to the ocean floor",
+        "Moist air rising on the windward side of a mountain range",
+        "Magma rising up through the crust at a divergent boundary",
         "Where wind blows warm surface water away, so cold deep water rises up"
       ],
       answer: 3,
@@ -34,10 +34,10 @@ window.EXAM_DATA.domains["enso"] = {
     { id: "el-q4", topic: "Upwelling",
       q: "Why are upwelling zones great for fishing?",
       choices: [
-        "The rising water is warmer, and warm water holds more oxygen for fish to breathe",
-        "Cold water rising up brings nutrients and holds more oxygen, so phytoplankton thrive and feed the food web",
-        "Strong winds there scare away predators, so fish populations grow very large",
-        "The rising water is saltier, which helps fish float and saves them energy"
+        "The rising water is warmer, and warm water holds more oxygen for fish",
+        "Rising cold water brings up nutrients and holds more oxygen, so plankton boom",
+        "Strong winds there scare away predators, so fish populations grow large",
+        "The rising water is saltier, which helps fish float and saves energy"
       ],
       answer: 1,
       explain: "Rising cold water carries nutrients from the deep and holds more oxygen. Phytoplankton boom, and everything that eats them follows: productive fishing." },
@@ -71,8 +71,8 @@ window.EXAM_DATA.domains["enso"] = {
       choices: [
         "Cold water rises at the pole; it warms and sinks at the equator; it spreads along the surface; it evaporates at upwelling zones",
         "Warm, fresh water sinks in the Gulf of Mexico; it rises near the pole; it spreads along the surface; it sinks again at upwelling zones",
-        "Cold water moves from the pole toward the Gulf of Mexico and warms; warm water sinks; it spreads along the deep ocean; it rises at the poles",
-        "Warm water moves from the Gulf of Mexico toward the pole and cools; cold, salty water sinks; it spreads along the deep ocean; it rises back up at upwelling zones"
+        "Cold water flows from the pole to the Gulf and warms; warm water sinks; it spreads along the deep ocean floor; it rises at the poles",
+        "Warm Gulf water flows toward the pole and cools; cold, salty water sinks; it spreads along the deep ocean; it rises at upwelling zones"
       ],
       answer: 3,
       explain: "1) Warm water from the Gulf of Mexico moves toward the pole, cooling as it goes. 2) Cold, salty, dense water sinks. 3) It spreads along the deep ocean. 4) It rises back up in warm ocean currents at upwelling zones." },
@@ -99,9 +99,9 @@ window.EXAM_DATA.domains["enso"] = {
     { id: "el-q11", topic: "Normal year",
       q: "In a normal year, what happens off the west coast of South America?",
       choices: [
-        "Warm water piles up and fishing collapses",
-        "Hurricanes form every week",
-        "The ocean freezes",
+        "Warm water piles up off the coast and the fishing collapses",
+        "Hurricanes form off the coast nearly every single week",
+        "The ocean surface gets cold enough to freeze over in winter",
         "Cool water upwells, giving cool temperatures and good fishing"
       ],
       answer: 3,

@@ -20,19 +20,19 @@ window.EXAM_DATA.domains["isl"] = {
       q: "Why do larger islands support higher species diversity?",
       choices: [
         "They have more available niches and different food sources",
-        "They are always closer to the mainland",
-        "They have fewer predators",
-        "They get more rainfall by law"
+        "They are always closer to the mainland than small islands",
+        "They have fewer predators hunting the species living there",
+        "They always get much more rainfall than smaller islands"
       ],
       answer: 0,
       explain: "A bigger island has more room and more variety of space, which means more niches (roles) and more different food sources for species to fill." },
     { id: "ib-q3", topic: "Island size",
       q: "Larger islands also tend to hold more genetic diversity because:",
       choices: [
-        "Species on big islands never mutate",
-        "Large islands have fewer species",
+        "Species on big islands never mutate, so their genes stay safe",
+        "Large islands have fewer species, so each one has more genes",
         "Larger populations usually have more genetic diversity",
-        "Bigger islands have older rocks"
+        "Bigger islands have older rocks, which add genes to the soil"
       ],
       answer: 2,
       explain: "Bigger island equals bigger populations, and bigger populations carry more gene variety, which makes them more RESILIENT to change and disease." },
@@ -44,9 +44,9 @@ window.EXAM_DATA.domains["isl"] = {
     { id: "ib-q5", topic: "Distance to mainland",
       q: "Why does an island closer to the mainland have higher species richness?",
       choices: [
-        "It is always larger",
-        "It has fewer niches",
-        "It has more rainfall",
+        "It is always larger than islands that are farther away",
+        "It has fewer niches, so species do not compete as much",
+        "It gets more rainfall because it is next to the mainland",
         "It is easier for species to migrate there by swimming or flying"
       ],
       answer: 3,
@@ -74,9 +74,9 @@ window.EXAM_DATA.domains["isl"] = {
     { id: "ib-q9", topic: "Evolution on islands",
       q: "A single finch species arrives on a new island. Over time it becomes many species with different beak shapes. Why?",
       choices: [
-        "The birds migrated back to the mainland",
-        "Inbreeding created new species instantly",
-        "The island got larger",
+        "The birds migrated back and forth to the mainland, picking up new traits",
+        "Inbreeding on the small island created brand new species instantly",
+        "The island grew larger over time, which split the finches into species",
         "Different beaks were selected for so the birds could fit different food sources"
       ],
       answer: 3,
@@ -85,9 +85,9 @@ window.EXAM_DATA.domains["isl"] = {
       q: "The Galapagos finch family tree shows that all the species share:",
       choices: [
         "A common ancestor from the South American mainland",
-        "The same beak shape",
-        "An inability to fly",
-        "The exact same diet"
+        "The same beak shape, built for cracking hard seeds",
+        "An inability to fly long distances over open ocean",
+        "The exact same diet of insects and soft fruit"
       ],
       answer: 0,
       explain: "The tree traces back to one common ancestor from the mainland. One colonizing species spread out and adapted into many, each filling a different food niche." },
@@ -103,16 +103,21 @@ window.EXAM_DATA.domains["isl"] = {
       explain: "A big connected habitat gets transformed into a patchwork of smaller, scattered islands of habitat surrounded by a very different altered perimeter." },
     { id: "ib-q12", topic: "Habitat fragmentation",
       q: "Which of these causes habitat fragmentation?",
-      choices: ["Photosynthesis", "Genetic drift", "Roads, agriculture, and urban development", "Rainfall"],
+      choices: [
+        "Photosynthesis by fast-growing plants",
+        "Genetic drift in small populations",
+        "Roads, agriculture, and urban development",
+        "Heavy rainfall over many seasons"
+      ],
       answer: 2,
       explain: "Fragmentation comes from human structures cutting habitat apart: roads, farm fields, and cities. These form the altered perimeter around each leftover patch." },
     { id: "ib-q13", topic: "Habitat fragmentation",
       q: "Why is island biogeography used to explain habitat fragmentation on land?",
       choices: [
         "Because each leftover patch acts like an island: small and isolated means fewer species",
-        "Because fragments always become larger over time",
-        "Because only birds live in fragments",
-        "Because fragments are surrounded by water"
+        "Because forest fragments always grow larger over time, like volcanic islands",
+        "Because only birds can live in fragments, just like on most ocean islands",
+        "Because fragments are usually surrounded by water from rivers and lakes"
       ],
       answer: 0,
       explain: "A forest patch ringed by highway behaves like an island in an ocean. The same two rules apply: small patches and isolated patches lose species." },
@@ -129,9 +134,9 @@ window.EXAM_DATA.domains["isl"] = {
     { id: "ib-q15", topic: "Wildlife corridors",
       q: "A wildlife corridor is best described as:",
       choices: [
-        "A zone where hunting is allowed",
-        "A road built through a protected forest",
-        "A fence that keeps animals off roads",
+        "A zone where hunting is allowed between parks",
+        "A road built straight through a protected forest",
+        "A tall fence that keeps animals off busy roads",
         "A connection point that links separated habitat patches"
       ],
       answer: 3,
@@ -139,9 +144,9 @@ window.EXAM_DATA.domains["isl"] = {
     { id: "ib-q16", topic: "Wildlife corridors",
       q: "The main genetic benefit of a wildlife corridor is that it:",
       choices: [
-        "Removes all predators from the area",
-        "Makes each patch physically larger overnight",
-        "Increases the number of roads",
+        "Removes all of the predators from the connected habitat patches",
+        "Makes each patch of habitat physically larger almost overnight",
+        "Increases the number of roads so animals can travel faster",
         "Lets separated populations interbreed, which keeps genetic diversity up"
       ],
       answer: 3,
@@ -160,19 +165,19 @@ window.EXAM_DATA.domains["isl"] = {
       q: "A park is planning either one 500-acre reserve or five separate 100-acre reserves. Island biogeography predicts the single large reserve will:",
       choices: [
         "Hold more species, because bigger area means more niches and larger populations",
-        "Hold the same number of species",
-        "Have more inbreeding than the five small ones",
-        "Hold fewer species because it has one habitat type"
+        "Hold the same number of species, since the total acreage is equal",
+        "Have more inbreeding than the five small ones, since animals are crowded",
+        "Hold fewer species, because one big reserve has only one habitat type"
       ],
       answer: 0,
       explain: "Bigger area means more niches, more food sources, and larger populations with more genetic diversity. If the five small reserves must be used, connect them with corridors." },
     { id: "ib-q19", topic: "Applying it",
       q: "A patch of forest is cut in half, and edge conditions (wind, sun, invasive plants) creep in from the new border. This shows that fragmentation:",
       choices: [
-        "Only reduces total area, nothing else",
+        "Only reduces the total area of the forest, and nothing inside the patches changes",
         "Also changes conditions inside the patch, since each patch is surrounded by an altered perimeter",
-        "Improves habitat quality",
-        "Has no effect until the patch is completely gone"
+        "Improves habitat quality, since more sunlight reaches plants inside the patch",
+        "Has no effect on the forest at all until the patch is completely cut down"
       ],
       answer: 1,
       explain: "The definition specifically says each fragment is surrounded by a very different, ALTERED perimeter. That changed edge degrades the habitat beyond just shrinking it." },

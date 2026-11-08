@@ -70,9 +70,9 @@ window.EXAM_DATA.domains["dist"] = {
       q: "The fastest way to tell episodic from random is:",
       choices: [
         "Episodic events recur irregularly, random events have no regular occurrence at all",
-        "Random events are always human caused",
-        "Episodic events only happen at night",
-        "Episodic events are bigger"
+        "Random events are always caused by humans, while episodic ones are natural",
+        "Episodic events only happen at night, while random events happen in the day",
+        "Episodic events are always bigger and do more damage than random events"
       ],
       answer: 0,
       explain: "Both are unpredictable, but episodic events still recur as a pattern of a region (hurricane season), while random events have no occurrence pattern at all (asteroid)." },
@@ -120,9 +120,9 @@ window.EXAM_DATA.domains["dist"] = {
       q: "Rising sea levels flooding coastal regions is an example of:",
       choices: [
         "Environmental change causing habitat destruction",
-        "A periodic disturbance",
-        "Genetic drift",
-        "A cultural ecosystem service"
+        "A periodic disturbance that returns every year",
+        "Genetic drift caused by a shrinking population",
+        "A cultural ecosystem service lost to tourism"
       ],
       answer: 0,
       explain: "Flooding a coast removes the habitat that was there. It is the textbook example of environmental change destroying habitat at large scale." },
@@ -159,9 +159,9 @@ window.EXAM_DATA.domains["dist"] = {
     { id: "nd-q19", topic: "Putting it together",
       q: "A hurricane flattens a coastal forest. Which sequence best describes what follows?",
       choices: [
-        "Immediate full recovery with no species loss",
-        "Permanent conversion to desert in every case",
-        "An increase in genetic diversity right away",
+        "Immediate full recovery within weeks, with no species lost",
+        "Permanent conversion of the forest into a desert in every case",
+        "A sudden jump in genetic diversity as new species move in",
         "Habitat loss, then wildlife migration or death, then gradual recovery"
       ],
       answer: 3,
@@ -169,10 +169,10 @@ window.EXAM_DATA.domains["dist"] = {
     { id: "nd-q20", topic: "Putting it together",
       q: "Why do scientists care about the difference between natural and anthropogenic disturbances?",
       choices: [
-        "Because natural disturbances are always smaller",
-        "Natural disturbances do not affect ecosystems",
-        "Because ecosystems evolved with natural disturbances, while human ones are often new and faster",
-        "Because only human disturbances can be measured"
+        "Natural disturbances are always smaller and much easier to recover from",
+        "Natural disturbances do not affect ecosystems in any lasting way",
+        "Ecosystems evolved with natural disturbances; human ones are often new and faster",
+        "Only human disturbances can be measured and tracked by scientists"
       ],
       answer: 2,
       explain: "Species have tolerance ranges and life cycles shaped by the natural disturbances of their region. Human disruptions are often novel or arrive faster than species can adapt." }

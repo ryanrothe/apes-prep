@@ -54,9 +54,9 @@ window.EXAM_DATA.domains["clim"] = {
     { id: "gc-q6", topic: "Ocean currents",
       q: "How do ocean currents affect climate?",
       choices: [
-        "They have no effect on land, since the heat stays out at sea",
-        "They redistribute thermal energy: warm currents heat nearby coasts, cool currents cool them",
-        "They only move water around the deep ocean floor, far from coasts",
+        "They have no effect on land, since all of the heat stays out at sea",
+        "They move heat around: warm currents warm nearby coasts, cool ones cool them",
+        "They only move water around the deep ocean floor, far from any coast",
         "They cause the earthquakes and tsunamis that shape coastal climates"
       ],
       answer: 1,

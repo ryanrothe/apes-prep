@@ -18,7 +18,12 @@ window.EXAM_DATA.domains["tol"] = {
       explain: "Ecological tolerance is the RANGE of conditions an organism can endure, things like temperature, salinity, and pH. Outside that range, it cannot survive." },
     { id: "tl-q2", topic: "Definition",
       q: "Which of these is NOT a condition that ecological tolerance usually describes?",
-      choices: ["Temperature", "Salinity", "pH", "The number of predators the species has eaten"],
+      choices: [
+        "The temperature range of the habitat",
+        "The salinity (saltiness) of the water",
+        "The pH (acidity) of the soil or water",
+        "The number of predators the species has eaten"
+      ],
       answer: 3,
       explain: "Tolerance ranges are measured against physical and chemical conditions: temperature, salinity, pH, oxygen. A count of meals eaten is not a condition of the environment." },
     { id: "tl-q3", topic: "Fundamental vs realized",
@@ -30,19 +35,19 @@ window.EXAM_DATA.domains["tol"] = {
       q: "The realized niche is:",
       choices: [
         "The full range of conditions a species could possibly survive",
-        "The range of abiotic and biotic conditions under which a species actually can live",
-        "The place where a species reproduces fastest",
-        "The area where a species always dies"
+        "The abiotic and biotic conditions where a species actually lives",
+        "The single place where a species reproduces the fastest",
+        "The area outside its range where a species always dies"
       ],
       answer: 1,
       explain: "The realized niche adds BIOTIC reality (competitors, predators) to the abiotic range. It is where the species actually ends up living, and it is usually smaller than the fundamental niche." },
     { id: "tl-q5", topic: "Fundamental vs realized",
       q: "Why is the realized niche usually smaller than the fundamental niche?",
       choices: [
-        "Because competitors and predators push a species out of parts of its tolerable range",
-        "Because organisms forget where they can live",
-        "Because the fundamental niche shrinks over time",
-        "Because temperature changes every day"
+        "Competitors and predators push a species out of parts of its tolerable range",
+        "Organisms slowly forget where they are able to live over many generations",
+        "The fundamental niche itself shrinks a little more every single year",
+        "Temperature changes every day, so the range keeps moving around"
       ],
       answer: 0,
       explain: "A barnacle might tolerate the whole rock face, but another species outcompetes it up top. Biotic pressure shrinks the usable space, giving a smaller realized niche." },
@@ -130,9 +135,9 @@ window.EXAM_DATA.domains["tol"] = {
       q: "How does ecological tolerance help scientists study extinction?",
       choices: [
         "It helps them understand the conditions that could cause extinction",
-        "It measures how fast fossils form",
-        "It predicts the weather",
-        "It shows how many species exist today"
+        "It measures how fast fossils form after a species dies",
+        "It predicts the weather that will happen next season",
+        "It shows exactly how many species exist on Earth today"
       ],
       answer: 0,
       explain: "If you know the range of conditions a species can endure, you can work out which environmental changes would push it past that range and wipe it out." },
@@ -145,9 +150,9 @@ window.EXAM_DATA.domains["tol"] = {
       q: "The mass extinction about 65 million years ago is best known for:",
       choices: [
         "Wiping out the dinosaurs, with roughly half of species lost",
-        "Creating the first land plants",
-        "Ending the last ice age",
-        "Causing the Industrial Revolution"
+        "Creating the first land plants and insects",
+        "Ending the last ice age and melting glaciers",
+        "Being caused by the Industrial Revolution"
       ],
       answer: 0,
       explain: "The 65 million year ago event took out the dinosaurs, and roughly half the populations of species died. It is the most recent of the five." },

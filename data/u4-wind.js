@@ -9,9 +9,9 @@ window.EXAM_DATA.domains["wind"] = {
     { id: "gw-q1", topic: "Drivers",
       q: "Which three things drive atmospheric circulation (global wind patterns)?",
       choices: [
-        "Plate tectonics, soil texture, and ocean salinity",
-        "The Moon, the ozone layer, and volcanoes",
-        "Albedo, humus, and radioactive decay",
+        "Plate tectonics, soil texture, and how salty the ocean is",
+        "The Moon's gravity, the ozone layer, and active volcanoes",
+        "Albedo of snow, humus in the soil, and radioactive decay",
         "Energy from sunlight, density properties of air, and Earth's rotation"
       ],
       answer: 3,

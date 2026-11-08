@@ -1,5 +1,5 @@
 /* Terra service worker. RULE: bump CACHE on ANY file change or installed copies keep serving stale files. */
-const CACHE = "terra-prep-v5";
+const CACHE = "terra-prep-v6";
 const ASSETS = [
   ".", "index.html", "styles.css", "app.js", "manifest.webmanifest",
   "data/courses.js",
